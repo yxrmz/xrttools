@@ -2,7 +2,9 @@
 """
 Created on Thu Oct  1 16:02:44 2020
 
-@author: roman
+@author: Roman Chernikov
+
+Test data can be downloaded from https://yadi.sk/d/65sbTgz7MEnfnA (~200MB numpy pickle) or use the calculator script nearby.
 """
 
 import numpy as np
@@ -25,7 +27,7 @@ class FluxNavigator(QtGui.QWidget):
         QtGui.QWidget.__init__(self)
         
         layout = QtGui.QHBoxLayout()
-        data = np.load('I0 vs E vs solidAngle 501x512x512.npz')
+        data = np.load('I0 vs E vs solidAngle 101x512x512.npz')
         self.plotArray3D = data['I0']
         energy = data['energy']
         theta = data['theta']*1e6
