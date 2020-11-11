@@ -21,18 +21,25 @@ def calc_vectors(theta, alphaDeg, geom):
     hns0 = sum(i*j for i, j in zip(hn, s0))
     return gamma0, gammah, hns0
 
+#crystalType = 'Si'
+crystalType = 'Ge'
+hkl = (1, 1, 1)
 
-crystal = rm.CrystalSi(hkl=(1, 1, 1))
+if crystalType == 'Si':
+    crystal = rm.CrystalSi(hkl=hkl)
+elif crystalType == 'Ge':
+    crystal = rm.CrystalDiamond(hkl=hkl, d=5.657, elements='Ge')
 
-E = 9000
+E = 8900
 dtheta = np.linspace(-20, 80, 501)
+#dtheta = np.linspace(-100, 300, 501)
 theta = crystal.get_Bragg_angle(E) + dtheta*1e-6
-asymmDeg = -10.  # Degrees
+asymmDeg = 0.  # Degrees
 
 g0, gh, hs0 = calc_vectors(theta, asymmDeg, 'Bragg')
 curS, curP = crystal.get_amplitude(E, g0, gh, hs0)
 #curS, curP = crystal.get_amplitude(E, np.sin(theta))
-print(crystal.get_a())
+#print(crystal.get_a())
 print(crystal.get_F_chi(E, 0.5/crystal.d))
 print(u'Darwin width at E={0:.0f} eV is {1:.5f} µrad for s-polarization'.
       format(E, crystal.get_Darwin_width(E) * 1e6))
